@@ -33,13 +33,12 @@ def query_wencai(query):
     return None
 
 def get_results(query_lst):
-
     for query in query_lst:
         df = query_wencai(query)
         # os.getcwd()  # 获取当前工作路径
         df["search_time"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 
-        return df
+        save_to_csv(df)
 
 def save_to_csv(df):
     filepath = 'result.csv'
@@ -60,8 +59,7 @@ if __name__ == '__main__':
         '北方华创 主力资金&资金'
     }
 
-    df = get_results(query_lst)
-    save_to_csv(df)
+    get_results(query_lst)
 
     # df = pd.read_csv(filepath)
     # print(df.head())
