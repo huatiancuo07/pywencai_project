@@ -45,9 +45,9 @@ def save_to_csv(df):
     filepath = 'result.csv'
 
     if os.path.exists(filepath):  # 文件已存在
-        df.to_csv(filepath, mode='a', header=False)
+        df.to_csv(filepath, mode='a', header=False, index_col=0)
     else:
-        df.to_csv(filepath)
+        df.to_csv(filepath, index_col=0)
 
 
 
