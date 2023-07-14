@@ -39,6 +39,6 @@ for query in query_lst:
     df = query_wencai(query)
     # os.getcwd()  # 获取当前工作路径
 
-    df.to_csv('result.csv')
+    df.to_csv('result.csv', mode='a')
 
 
