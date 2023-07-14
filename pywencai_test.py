@@ -1,7 +1,10 @@
 import pywencai
 import pandas as pd
 from pandas import DataFrame
-# import os
+import os
+import time
+
+filepath = 'result.csv'
 
 def query_wencai(query):
     res = pywencai.get(question=query, loop=True)
@@ -29,16 +32,37 @@ def query_wencai(query):
             return df
     return None
 
-query_lst = {
+def get_results(query_lst):
+
+    for query in query_lst:
+        df = query_wencai(query)
+        # os.getcwd()  # 获取当前工作路径
+        df["search_time"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+
+        return df
+
+def save_to_csv(df):
+    filepath = 'result.csv'
+
+    if os.path.exists(filepath):  # 文件已存在
+        df.to_csv(filepath, mode='a', header=False)
+    else:
+        df.to_csv(filepath)
+
+
+
+
+if __name__ == '__main__':
+    query_lst = {
         '长电科技 主力资金&资金',
         '中芯国际 主力资金&资金',
         '宁德时代 主力资金&资金',
         '北方华创 主力资金&资金'
-        }
-for query in query_lst:
-    df = query_wencai(query)
-    # os.getcwd()  # 获取当前工作路径
+    }
 
-    df.to_csv('result.csv', mode='a')
+    df = get_results(query_lst)
+    save_to_csv(df)
 
+    # df = pd.read_csv(filepath)
+    # print(df.head())
 
